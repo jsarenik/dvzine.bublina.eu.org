@@ -1,0 +1,63 @@
+/*Okay, so this is me trying to set up a WHOLE NEW css scheme for DVzine.org v2.0
+	The main idea I guess is that I will have a giant table that is the same for 
+	each page.  BUT  inside the <tr> tags I will dump a line of PHP so that each
+	row is being loaded dynamically depending on where you are in the site.
+	I'm hoping that will keep things more organized, and easier to change
+	(for example, adding a new menu item, etc.)  Here goes nothing! */
+
+body {background-color: #009900;
+		font-family: Lucida Grande,Verdana, Arial, Helvetica, sans-serif;
+		 font-size:12px;}
+
+/*here I'm setting up black text on a presumed white background (of the new content box)
+	And I'm going to make links match the green of the outside background of the site*/
+
+p,h {color:black;
+	font-size:12px;}
+
+a {color: #009900;}
+a:visited {color: #336633;}
+a:active {color: #00CC00;}
+
+/*I can break different table stuff for inside cells if need be, but having this unifying
+	code will clean up the layout considerably, I think*/
+
+table {width: 750px;
+		text-align: left; 
+		margin-left: auto;
+		margin-right: auto;}
+
+/*I'm going to leave out text-align: (center or left) since that will vary a lot
+	ALSO: I NEED TO FIGURE OUT HOW TO GET SOME SPACING AROUND THE CELLS-THE "MARGIN"
+	TAG IS NOT WORKING!!!*/
+
+td {vertical-align: top;
+	}
+
+/*These are the special format for the TABS in the primary navigation links*/
+
+td.tab {vertical-align: middle;
+		text-align: center;
+		background: white;}
+
+/*And this will be the format for the secondary navigation AND main content cells*/
+
+td.white {padding: 10px;
+		vertical-align: top;
+		text-align: left;
+		background: white;}
+
+/* These are the white text/yellow links on Green background
+	attributes for the footer and anything else outside of the
+	main content box */
+
+td.footer {background: #009900;} 
+
+p.footer {color:white;}
+a.footer {color: #ffff00;}
+a.footer:visited {color: #ffcc33;}
+a.footer:active {color: #ffff66;}
+
+
+li,ul {font-family: Lucida Grande,Verdana, Arial, Helvetica, sans-serif;
+		 font-size:12px;}

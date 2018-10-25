@@ -1,0 +1,790 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>DVzine.org - Typing Analyzer</title>
+<script type="text/javascript">
+
+function letter(identity, dkey, qkey, dfinger, qfinger, drow, qrow, count, percent){
+
+	this.identity = identity;
+
+	this.dkey = dkey;
+
+	this.qkey = qkey;
+
+	this.dfinger = dfinger;
+
+	this.qfinger = qfinger;
+
+	this.drow = drow;
+
+	this.qrow = qrow;
+
+	this.count = count;
+
+	this.percent = percent;
+
+}
+
+
+
+
+
+space = new letter(" ", 48, 48, 9, 9, 4, 4, 0, 0);
+
+tilde = new letter("~", 0, 0, 1, 1, 0, 0, 0, 0);
+
+one = new letter("1", 1, 1, 1, 1, 0, 0, 0, 0);
+
+two = new letter("2", 2, 2, 2, 2, 0, 0, 0, 0);
+
+three = new letter("3", 3, 3, 3, 3, 0, 0, 0, 0);
+
+four = new letter("4", 4, 4, 4, 4, 0, 0, 0, 0);
+
+five = new letter("5", 5, 5, 4, 4, 0, 0, 0, 0);
+
+six = new letter("6", 6, 6, 5, 5, 0, 0, 0, 0);
+
+seven = new letter("7", 7, 7, 5, 5, 0, 0, 0, 0);
+
+eight = new letter("8", 8, 8, 6, 6, 0, 0, 0, 0);
+
+nine = new letter("9", 9, 9, 7, 7, 0, 0, 0, 0);
+
+zero = new letter("0", 10, 10, 8, 8, 0, 0, 0, 0);
+
+lbrac = new letter("[", 11, 23, 8, 8, 0, 0, 0, 0);
+
+rbrac = new letter("]", 12, 24, 8, 8, 0, 0, 0, 0);
+
+
+
+apost = new letter("\'", 13, 36, 1, 8, 1, 2, 0, 0);
+
+comma = new letter(",", 14, 44, 2, 6, 1, 3, 0, 0);
+
+period = new letter(".", 15, 45, 3, 7, 1, 3, 0, 0);
+
+p = new letter("p", 16, 22, 4, 8, 1, 1, 0, 0);
+
+y = new letter("y", 17, 18, 4, 5, 1, 1, 0, 0);
+
+f = new letter("f", 18, 29, 5, 4, 1, 2, 0, 0);
+
+g = new letter("g", 19, 30, 5, 4, 1, 2, 0, 0);
+
+c = new letter("c", 20, 39, 6, 3, 1, 3, 0, 0);
+
+r = new letter("r", 21, 16, 7, 4, 1, 1, 0, 0);
+
+l = new letter("l", 22, 34, 8, 7, 1, 2, 0, 0);
+
+slash = new letter("/", 23, 46, 8, 8, 1, 3, 0, 0);
+
+equal = new letter("=", 24, 12, 8, 8, 1, 0, 0, 0);
+
+bslash = new letter("\\", 25, 25, 8, 8, 1, 1, 0, 0);
+
+a = new letter("a", 26, 26, 1, 1, 2, 2, 0, 0);
+
+o = new letter("o", 27, 21, 2, 7, 2, 1, 0, 0);
+
+e = new letter("e", 28, 15, 3, 3, 2, 1, 0, 0);
+
+u = new letter("u", 29, 19, 4, 5, 2, 1, 0, 0);
+
+i = new letter("i", 30, 20, 4, 6, 2, 1, 0, 0);
+
+d = new letter("d", 31, 28, 5, 3, 2, 2, 0, 0);
+
+h = new letter("h", 32, 31, 5, 5, 2, 2, 0, 0);
+
+t = new letter("t", 33, 17, 6, 4, 2, 1, 0, 0);
+
+n = new letter("n", 34, 42, 7, 5, 2, 3, 0, 0);
+
+s = new letter("s", 35, 27, 8, 2, 2, 2, 0, 0);
+
+dash = new letter("-", 36, 11, 8, 8, 2, 0, 0, 0);
+
+semi = new letter(";", 37, 35, 1, 8, 3, 2, 0, 0);
+
+q = new letter("q", 38, 13, 2, 1, 3, 1, 0, 0);
+
+j = new letter("j", 39, 32, 3, 5, 3, 2, 0, 0);
+
+k = new letter("k", 40, 33, 4, 6, 3, 2, 0, 0);
+
+x = new letter("x", 41, 38, 4, 2, 3, 3, 0, 0);
+
+b = new letter("b", 42, 41, 5, 4, 3, 3, 0, 0);
+
+m = new letter("m", 43, 43, 5, 5, 3, 3, 0, 0);
+
+w = new letter("w", 44, 14, 6, 2, 3, 1, 0, 0);
+
+v = new letter("v", 45, 40, 7, 4, 3, 3, 0, 0);
+
+z = new letter("z", 46, 37, 8, 1, 3, 3, 0, 0);
+
+var inputLength;
+
+var outputType;
+
+var sameDfinger = 0;
+
+var sameQfinger = 0;
+
+var sameDhand = 0;
+
+var sameQhand = 0;
+
+var diffDhand = 0;
+
+var diffQhand = 0;
+
+var currentLetter;
+
+var nextLetter;
+
+var convertedLetter;
+
+var convertLetter;
+
+var rowCountDvorak = new Array(0, 0, 0, 0, 0);
+
+var rowCountQwerty = new Array(0, 0, 0, 0, 0);
+
+var fingerCountDvorak = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0); 
+
+var fingerCountQwerty = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+var rowPercentDvorak = new Array(0, 0, 0, 0, 0);
+
+var rowPercentQwerty = new Array(0, 0, 0, 0, 0);
+
+var fingerPercentQwerty = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+var fingerPercentDvorak = new Array(0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+
+
+var allKeysD = new String("`1234567890[]',.pyfgcrl?=aoeuidhtns-;qjkxbmwvz");
+
+var allKeysQ = new String("`1234567890-=qwertyuiop[]asdfghjkl;'zxcvbnm,./");
+
+
+
+function convert(convertLetter){
+
+		 convertedLetter = convertLetter
+
+	if ((convertedLetter == "~") || (convertedLetter =="`"))
+
+		 convertedLetter = "tilde";
+
+	if ((convertedLetter == "1") || (convertedLetter =="!"))
+
+		 convertedLetter = "one";
+
+	if ((convertedLetter == "2") || (convertedLetter =="@"))
+
+		 convertedLetter = "two";
+
+	if ((convertedLetter == "3") || (convertedLetter =="#"))
+
+		 convertedLetter = "three";
+
+	if ((convertedLetter == "4") || (convertedLetter =="$"))
+
+		 convertedLetter = "four";
+
+	if ((convertedLetter == "5") || (convertedLetter =="%"))
+
+		 convertedLetter = "five";
+
+	if ((convertedLetter == "6") || (convertedLetter =="^"))
+
+		 convertedLetter = "six";
+
+	if ((convertedLetter == "7") || (convertedLetter =="&"))
+
+		 convertedLetter = "seven";
+
+	if ((convertedLetter == "8") || (convertedLetter =="*"))
+
+		 convertedLetter = "eight";
+
+	if ((convertedLetter == "9") || (convertedLetter =="("))
+
+		 convertedLetter = "nine";
+
+	if ((convertedLetter == "0") || (convertedLetter ==")"))
+
+		 convertedLetter = "zero";
+
+	if ((convertedLetter == "'") || (convertedLetter =='"'))
+
+		 convertedLetter = "apost";
+
+	if ((convertedLetter == ",") || (convertedLetter =="<"))
+
+		 convertedLetter = "comma";
+
+	if ((convertedLetter == ".") || (convertedLetter ==">"))
+
+		 convertedLetter = "period";
+
+	if ((convertedLetter == "/") || (convertedLetter =="?"))
+
+		 convertedLetter = "slash";
+
+	if ((convertedLetter == "=") || (convertedLetter =="+"))
+
+		 convertedLetter = "equal";
+
+	if ((convertedLetter == "-") || (convertedLetter =="_"))
+
+		 convertedLetter = "dash";
+
+	if ((convertedLetter == ";") || (convertedLetter ==":"))
+
+		 convertedLetter = "semi";
+
+	if (convertedLetter == " ")
+
+		 convertedLetter = "space";
+
+	if ((convertedLetter == "[") || (convertedLetter =="{"))
+
+		 convertedLetter = "lbrac";
+
+	if ((convertedLetter == "]") || (convertedLetter =="}"))
+
+		 convertedLetter = "rbrac";
+
+}
+
+
+
+function preAnalysis() {
+
+		outputType = document.form1.outputtype.selectedIndex;
+
+		outputWindow = window.open("", "outputWindow", "scrollbars=yes, resizable=yes, width=800");
+
+		var input = document.form1.analyzeme.value;
+
+		input = input.toLowerCase();
+
+		input = input.replace(/\r|\n|\r\n|\\|\||\t/g, "")
+
+		inputLength = input.length;
+
+		for (dummy = 0; dummy <= inputLength-1; dummy++){
+
+		 	currentLetter = input.charAt(dummy);
+
+			nextLetter = input.charAt(dummy+1);
+
+			convert(currentLetter);
+
+			currentLetter = convertedLetter;
+
+			var currentLetterObj = eval(currentLetter);
+
+  		 	//Key-by-key Count pre-analysis
+
+			currentLetterObj.count++;
+
+
+
+			//Row pre-analysis
+
+			rowCountDvorak[currentLetterObj.drow] += 1;
+
+			rowCountQwerty[currentLetterObj.qrow] += 1;
+
+			rowPercentDvorak[currentLetterObj.drow] = Math.round(100* (rowCountDvorak[currentLetterObj.drow] / (inputLength - space.count)));
+
+			rowPercentQwerty[currentLetterObj.qrow] = Math.round(100* (rowCountQwerty[currentLetterObj.qrow] / (inputLength - space.count)));
+
+			//Finger pre-analysis
+
+			fingerCountDvorak[currentLetterObj.dfinger] += 1;
+
+			fingerCountQwerty[currentLetterObj.qfinger] += 1;																											    
+
+			fingerPercentDvorak[currentLetterObj.dfinger] = Math.round(100* (fingerCountDvorak[currentLetterObj.dfinger] / (inputLength - space.count)));
+
+			fingerPercentQwerty[currentLetterObj.qfinger] = Math.round(100* (fingerCountQwerty[currentLetterObj.qfinger] / (inputLength - space.count)));			
+
+	 	    if (nextLetter != ""){
+
+			  convert(nextLetter);
+
+    		  nextLetter = convertedLetter;
+
+			  var nextLetterObj = eval(nextLetter);
+
+			  //Samefinger Count analysis
+
+			  if (currentLetterObj.dfinger == nextLetterObj.dfinger)
+
+			 	sameDfinger += 1;
+
+			  if (currentLetterObj.qfinger == nextLetterObj.qfinger)
+
+			 	sameQfinger += 1;
+
+			  //Same Hand count analysis
+
+			  if ( ((currentLetterObj.dfinger <= 4) && (nextLetterObj.dfinger <= 4)) || ((currentLetterObj.dfinger >= 5) && (nextLetterObj.dfinger >= 5)))
+
+			    sameDhand += 1;
+
+			  if ( ((currentLetterObj.qfinger <= 4) && (nextLetterObj.qfinger <= 4)) || ((currentLetterObj.qfinger >= 5) && (nextLetterObj.qfinger >= 5)))
+
+			  	sameQhand += 1;
+
+			  if ( ((currentLetterObj.dfinger <= 4) && (nextLetterObj.dfinger > 4)) || ((currentLetterObj.dfinger > 4) && (nextLetterObj.dfinger <= 4)))
+
+			    diffDhand += 1;
+
+			  if ( ((currentLetterObj.qfinger <= 4) && (nextLetterObj.qfinger > 4)) || ((currentLetterObj.qfinger > 5) && (nextLetterObj.qfinger <= 4)))
+
+			  	diffQhand += 1;
+
+
+			 }
+
+		}
+
+		if (outputType == 1){
+
+		   keyByKey();
+
+		   }
+
+		if (outputType == 0){
+
+		   basicAnalysis();
+
+		}
+
+}
+
+
+
+function basicAnalysis() {
+
+		 outputWindow.document.writeln("<html><head><title>Simple Output</title>");
+
+		 outputWindow.document.writeln("</head><body bgcolor=#00DD00 text=#000000 link=#000000 vlink=#000000 alink=#000000><font face=\'Arial, Arial New\'>");
+
+		 outputWindow.document.writeln("<h1>The Dvorak / QWERTY Keyboard Efficiency Analyzer</h1>");
+
+		 outputWindow.document.writeln("<br>");
+
+		 outputWindow.document.writeln("<table border=1 width=600 cellspacing=1 cellpadding=0>");
+
+		 outputWindow.document.writeln("<tr><td></td><td><center><b>Dvorak</b></center></td><td><center><b>QWERTY</b></center></td>");
+
+		 outputWindow.document.writeln("<tr><td>Number Row Usage</td><td><center>" + rowCountDvorak[0] + "(" + rowPercentDvorak[0] +  "%)</center></td><td><center>" + rowCountQwerty[0] + "(" + rowPercentQwerty[0] +  "%)</center></td>");
+
+		 outputWindow.document.writeln("<tr><td>Top Row Usage</td><td><center>" + rowCountDvorak[1] + "(" + rowPercentDvorak[1] +  "%)</center></td><td><center>" + rowCountQwerty[1] + "(" + rowPercentQwerty[1] +  "%)</center></td>");
+
+ 		 outputWindow.document.writeln("<tr><td>Home Row Usage</td><td><center>" + rowCountDvorak[2] + "(" + rowPercentDvorak[2] +  "%)</center></td><td><center>" + rowCountQwerty[2] + "(" + rowPercentQwerty[2] +  "%)</center></td>");
+
+		 outputWindow.document.writeln("<tr><td>Bottom Row Usage</td><td><center>" + rowCountDvorak[3] + "(" + rowPercentDvorak[3] +  "%)</center></td><td><center>" + rowCountQwerty[3] + "(" + rowPercentQwerty[3] +  "%)</center></td>");
+
+		 outputWindow.document.writeln("<tr><td>Number of hand alternations</td><td><center>" + diffDhand + "</center></td><td><center>" + diffQhand + "</center></td>" );
+
+		 outputWindow.document.writeln("<tr><td>Number of same-finger reaches</td><td><center>" + sameDfinger + "</center></td><td><center>" + sameQfinger + "</center></td>" );
+
+		 outputWindow.document.writeln("</table></html>");
+
+		 outputWindow.document.close;
+
+		 resetCount();
+
+}
+
+		 
+
+function keyByKey() {
+
+
+
+			 var allKeysD = new String("`1234567890[]',.pyfgcrl?=aoeuidhtns-;qjkxbmwvz");
+
+			 var totalKeys = 0;
+
+			 var topPercent = 0;
+
+			 outputWindow.document.writeln("<html><head><title>Key-by-key graph of usage</title></head>");
+
+			 outputWindow.document.writeln("<body bgcolor=#00DD00 text=#000000 link=#ffff00 vlink=#cccc00>");
+
+			 outputWindow.document.writeln("<font face='Arial, Arial New' size=5> Key-by-key usage analysis </font><br><br>");
+
+			 outputWindow.document.writeln("<font face='Arial, Arial New' size=3>These charts will give you a general idea of key usage in Dvorak and QWERTY.");
+
+			 outputWindow.document.writeln("To get exact information about keystroke counts and percentage of keystrokes on a key,");
+
+			 outputWindow.document.writeln("simply hold your mouse over that key</font><br><br>");
+
+			 for (dummy=0; dummy<= allKeysD.length-1; dummy++){
+
+  		 	  var currentLetter = allKeysD.charAt(dummy);
+
+			  convert(currentLetter);
+
+			  currentLetter = convertedLetter;
+
+			  var currentLetterObj = eval(currentLetter);
+
+			  var percentOfKeys = Math.round((currentLetterObj.count / (inputLength - space.count)) * 100);
+
+			  currentLetterObj.percent = percentOfKeys;
+
+			  if (percentOfKeys > topPercent){
+
+			  	 topPercent = percentOfKeys;
+
+				 }
+
+			 }
+
+			 outputWindow.document.writeln("<table width=700 border=0>");
+
+			 outputWindow.document.writeln("<tr><td>");
+
+			 outputWindow.document.writeln("<font color='#000000' face='Arial, Arial New' size=5>Dvorak</font><br>");
+
+			 for (dummy=0; dummy <= allKeysD.length-1; dummy++){
+
+			  var ratioPercent = 0;
+
+			  var numSuffix = 0;
+
+			  currentLetter = allKeysD.charAt(dummy);
+
+			  convert(currentLetter);
+
+			  currentLetter = convertedLetter;
+
+			  currentLetterObj = eval(currentLetter);
+
+			  ratioPercent = (currentLetterObj.percent / topPercent);
+
+			  if ((1 >= ratioPercent) && (ratioPercent >= .8)){
+
+			  	 numSuffix = 5;
+
+			     }
+
+			  if ((.8 > ratioPercent) && (ratioPercent >= .6)){
+
+			     numSuffix = 4;
+
+				 }				 
+
+			  if ((.6 > ratioPercent) && (ratioPercent >= .4)){
+
+			     numSuffix = 3;
+
+				 }				 
+
+			  if ((.4 > ratioPercent) && (ratioPercent >= .2)){
+
+			     numSuffix = 2;
+
+				 }				 
+
+			  if ((.2 > ratioPercent) && (ratioPercent > 0)){
+
+			     numSuffix = 1;
+
+				 }				 
+
+			  outputWindow.document.writeln("<img src=./colorout/" + currentLetter + "-" + numSuffix 
+
+			  + ".gif width=40 alt='" + currentLetterObj.percent + "% (" + currentLetterObj.count + " keystrokes)' title='" + currentLetterObj.percent + "% (" + currentLetterObj.count + " keystrokes)'>");
+
+			  if (currentLetterObj.dkey == 12)
+
+			  	 outputWindow.document.writeln("<img src=./colorout/backsp.gif height=40><br><img src=./colorout/tab.gif  height=40>");
+
+			  if (currentLetterObj.dkey == 24)
+
+			  	 outputWindow.document.writeln("<img src=./colorout/bslash.gif height=40><br><img src=./colorout/caps.gif height=40>");
+
+			  if (currentLetterObj.dkey == 36)
+
+				 outputWindow.document.writeln("<img src=./colorout/return.gif height=40><br><img src=./colorout/lshift.gif height=40>");
+
+			  if (currentLetterObj.dkey == 46){
+
+			  	 outputWindow.document.writeln("<img src=./colorout/rshift.gif height=40><br><br><br>");
+
+			     } 
+
+			}
+
+		 outputWindow.document.writeln("</td> </tr> <tr> <td>");
+
+		 outputWindow.document.writeln("<center><img src='./colorout/d-0.gif'> <img src='./colorout/d-1.gif'> <img src='./colorout/d-2.gif'>");
+
+		 outputWindow.document.writeln("<img src='./colorout/d-3.gif'> <img src='./colorout/d-4.gif'> <img src='./colorout/d-5.gif'><br>");
+
+		 outputWindow.document.writeln("<font color='#000000' face='Arial, Arial New' size=3>No usage > > > > Highest usage</font></center>");
+
+		 outputWindow.document.writeln("</td></tr><tr><td><br>");
+
+		 outputWindow.document.writeln("<font color='#000000' face='Arial, Arial New' size=5>QWERTY</font><br>");
+
+			 for (dummy=0; dummy <= allKeysQ.length-1; dummy++){
+
+			  var ratioPercent = 0;
+
+			  var numSuffix = 0;
+
+			  currentLetter = allKeysQ.charAt(dummy);
+
+			  convert(currentLetter);
+
+			  currentLetter = convertedLetter;
+
+			  currentLetterObj = eval(currentLetter);
+
+			  ratioPercent = (currentLetterObj.percent / topPercent);
+
+			  if ((1 >= ratioPercent) && (ratioPercent >= .8)){
+
+			  	 numSuffix = 5;
+
+			     }
+
+			  if ((.8 > ratioPercent) && (ratioPercent >= .6)){
+
+			     numSuffix = 4;
+
+				 }				 
+
+			  if ((.6 > ratioPercent) && (ratioPercent >= .4)){
+
+			     numSuffix = 3;
+
+				 }				 
+
+			  if ((.4 > ratioPercent) && (ratioPercent >= .2)){
+
+			     numSuffix = 2;
+
+				 }				 
+
+			  if ((.2 > ratioPercent) && (ratioPercent > 0)){
+
+			     numSuffix = 1;
+
+				 }				 
+
+			  outputWindow.document.writeln("<img src=./colorout/" + currentLetter + "-" + numSuffix 
+
+			  + ".gif width=40 alt='" + currentLetterObj.percent + "% (" + currentLetterObj.count + " keystrokes)' title='" + currentLetterObj.percent + "% (" + currentLetterObj.count + " keystrokes)'>");
+
+			  if (currentLetterObj.qkey == 12)
+
+			  	 outputWindow.document.writeln("<img src=./colorout/backsp.gif height=40><br><img src=./colorout/tab.gif  height=40>");
+
+			  if (currentLetterObj.qkey == 24)
+
+			  	 outputWindow.document.writeln("<img src=./colorout/bslash.gif height=40><br><img src=./colorout/caps.gif height=40>");
+
+			  if (currentLetterObj.qkey == 36)
+
+				 outputWindow.document.writeln("<img src=./colorout/return.gif height=40><br><img src=./colorout/lshift.gif height=40>");
+
+			  if (currentLetterObj.qkey == 46){
+
+			  	 outputWindow.document.writeln("<img src=./colorout/rshift.gif height=40><br><br><br>");
+
+			     } 
+
+			 }
+
+			 outputWindow.document.writeln("</table></html>");
+
+			 resetCount();		
+
+			 outputWindow.document.close;
+
+		 }
+
+
+
+function resetCount() {
+
+		 for (dummy=0; dummy <= allKeysD.length-1; dummy++){
+
+		 	 currentLetter = allKeysD.charAt(dummy);
+
+			 convert(currentLetter);
+
+			 currentLetter = convertedLetter;
+
+			 currentLetterObj = eval(currentLetter);
+
+			 currentLetterObj.count = 0;
+
+			 currentLetterObj.percent = 0;
+
+			 sameQhand = 0;
+
+			 sameDhand = 0;
+
+			 sameQfinger = 0;
+
+			 sameDfinger = 0;
+
+			 space.count = 0;
+
+			 space.percent = 0;
+
+			 
+
+		 }
+
+		 for (dummy=0; dummy <= 4; dummy++){
+
+		     rowCountQwerty[dummy] = 0;
+
+			 rowCountDvorak[dummy] = 0;
+
+		 }
+
+		 for (dummy=0; dummy <= 8; dummy++){
+
+		     fingerCountQwerty[dummy] = 0;
+
+			 fingerCountDvorak[dummy] = 0;
+
+		 }
+
+}
+
+</script>
+
+
+
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">  
+  <meta content="Michael Cardiff" name="author">
+  <meta content="The Dvorak Zine, Dvorak Simplified Keyboard Layout" name="description">
+<link rel="stylesheet" href="/includes/dvorakNEW.css" type="text/css">
+<link rel="Shortcut Icon" type="image/ico" href="/favicon.ico"></head>
+<body>
+<table><tbody>
+    <!--At first there is just a plain static HTML Table Row to hold the DVzine.org logo
+and the Map of the Dvorak Keyboard layout, which is the same on every page-->
+<tr><td style="text-align: center;" colspan="3"><a href="http://www.DVzine.org/">
+	<img alt="The Dvorak Zine" src="/img/TITLE.gif" style="border: 0px solid ; width: 219px; height: 100px;"></a></td>
+
+	<td style="text-align: center;" colspan="3">
+	<img alt="The Dvorak Simplified Keyboard Layout" src="/img/KEYMAP.gif" style="width: 343px; height: 100px;"></td></tr>
+
+<!--Next is the "tab" functionality.  Right before I call upon "nav.php" on each page
+I set the variable '$section' to one of the 6 sections of the site.  Then, below, I have the function 'activate_tab' change the CLASS of each <td> to "tab" if it is within that
+section.  (Because in my CSS file I have a different td.tab class called out, which
+changes the cell background color to white.  Rinse and repeat for the six sections-->
+
+<tr>
+<td  style="text-align: center;"><a href="/zine/index.html"><img alt="The Zine" src="/img/zine.gif" style="border: 0px solid ; width: 104px; height: 50px;"></a></td>
+
+<td  style="text-align: center;"><a href="/type/index.html"><img alt="Type DV Now" src="/img/type.gif" style="border: 0px solid ; width: 125px; height: 50px;"></a></td>
+
+<td class="tab" style="text-align: center;"><a href="/info/index.html"><img alt="DV Info" src="/img/info.gif" style="border: 0px solid ; width: 105px; height: 50px;"></a></td>
+
+<td  style="text-align: center;"><a href="/international/index.html"><img alt="DV International" src="/img/int.gif" style="border: 0px solid ; width:106px; height: 50px;"></a></td>
+
+<td  style="text-align: center;"><a href="/about/index.html"><img alt="About" src="/img/about.gif" style="border: 0px solid ; width: 113px; height: 50px;"></a></td>
+
+<td  style="text-align: center;"><a href="http://dvzine.blogspot.com/"><img alt="DV blog" src="/img/blog.gif" style="border: 0px solid ; width: 105px; height: 50px;"></a></td>
+</tr>
+
+<!--And then HERE I will try and do the tricky IF/ELSE statements to call upon the secondary navigigation for each section...-->
+<tr>
+<td colspan="6" class="tab"><h3><a href="/info/index.html">Dvorak History</a>  |  <img src="/img/URhere.gif"><a href="/info/input.html">Typing Analyzer</a>  |  <a href="/info/DvorakDay.html">Dvorak Day</a>  |  <a href="/info/links.html">Links</a>
+</h3></td></tr>    <tr><td class="white" colspan="6" style="vertical-align: top;">
+      <h2>The QWERTY / DVORAK Typing Analyzer</h2>
+
+<p>Designed and Programmed by Frunch in 2001, as part of his Oberlin College honors math project on mathematically optimizing keyboards.</p>
+
+<p>This program was built to show you how much more efficient Dvorak is,
+compared to QWERTY. To get some quick statistics, just type a sentence
+or two  into the text field below (or "cut" and "paste" a large block of text!)
+and hit "submit." There are two different output options you can choose:</p></td>
+    </tr>
+    <tr>
+      <td class="white" colspan="3" style="vertical-align: top; text-align: center">
+      <h3>1) Simple Output</h3>
+      <img alt="Simple Output" src="analyzer-simple.gif" style="width: 200px; height: 65px;"><p>Simple Output provides the percentage of keystrokes for the number row,
+top row, home row and bottom row. It will also tell you how many hand alternations were in your block of text and how many same-finger reaches. You should notice that
+with Dvorak, you will have more home-row keystrokes and more hand alternations too!</p>
+      </td>
+      <td class="white" colspan="3" style="vertical-align: top; text-align: center">
+      <h3>2) Key-By-Key Output</h3>
+      <img alt="Key-By-Key Output" src="analyzer.gif" style="width: 200px; height: 68px;"><p>Key-By-Key Output calculates the exact number of keystrokes for each
+character and displays it in a dynamic keymap, colored according to
+frequency.  Place your cursor over each key to get its exact letter count. With Dvorak,
+you should notice that your most used keys end up on the home row, and on your "stronger" fingers to boot!</p>
+      </td>
+    </tr>
+  <tr>
+      <td class="white" colspan="6" style="vertical-align: top;">
+<form name="form1"><p><i>Enter your text here:</i></p>
+
+<textarea name="analyzeme" rows="10" cols="80"></textarea>
+
+<br>
+
+<select name="outputtype" size="1"><option selected="selected" value="1"> simple output</option><option value="2"> key by key output </option></select>
+
+
+
+<input value="   Submit   " onClick="preAnalysis()" type="button">
+
+<input value="Reset" onClick="document.form1.reset(), resetCount()" type="button">
+
+</form><p>
+<span style="font-style: italic;">Please note:</span> If you input a large block of text the analyzer might take a few moments to process the data.  Please be patient!  Also, some accented characters may not work in the analyzer.  If you have any trouble, you can try this <a href="http://www.codesharp.co.uk/dvorak/">other QWERTY vs. Dvorak analyzer.</a></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div style="text-align: center;"><br />
+<table width="800">
+  <tbody>
+    <tr><td class="footer" style="text-align: center;" width="150px"><p class="footer"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a></p><p><a class="footer" href="/about/sitemap.html">Sitemap</a>  |  <a class="footer" href="/about/donate.html">Donate</a></p></td>
+    
+    <td width="650px"><p align="center" class="footer"><em>The Dvorak Zine</em> by Alec Longstreth, Gabe Carleton-Barnes and Michael Cardiff is licensed under a<br> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/" class="footer">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a></p></td></tr>
+
+<tr><td class="footer" style="text-align: center;" colspan="2"><br /><script type="text/javascript"><!--
+google_ad_client = "pub-3180523273703671";
+/* 728x90, created 2/22/10 */
+google_ad_slot = "1501487654";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</td></tr></tbody></table>
+</div>
+
+<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
+</script>
+<script type="text/javascript">
+_uacct = "UA-3078980-1";
+urchinTracker();
+</script></body></html>
