@@ -12,12 +12,7 @@ NUMNODES=3
 ################################################################
 
 check() {
-  pgrep -f "$1" >/dev/null 2>&1 || err "$2"
-}
-
-err() {
-  echo $1 >&2
-  exit 1
+  pgrep -f "$1" >/dev/null 2>&1 || { echo "$2" >&2; exit 1; }
 }
 
 check "ipfs daemon" "Run ipfs daemon first!"
