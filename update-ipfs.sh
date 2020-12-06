@@ -3,30 +3,26 @@
 # ipfs daemon should be running on the machine
 # where this script is run
 
-PUBLICDIR=.
-DNS=dvzine.bublina.eu.org
+test -n "$DEBUG" && set -x
+
+a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; BINDIR=$(cd $a; pwd)
+URC=$BINDIR/update-ipfs.conf
+
+# Default values
+PUBLICDIR=public
 NUMNODES=3
-
-################################################################
-################################################################
-################################################################
-
-check() {
-  pgrep -f "$1" >/dev/null 2>&1 || { echo "$2" >&2; exit 1; }
-}
-
-check "ipfs daemon" "Run ipfs daemon first!"
+test -r $URC && . $URC
+test -n "$DNS" || { echo "DNS not set in $URC! Exiting." >&2; exit 1; }
 
 SPFTRC=$HOME/.spf-toolsrc
 # Read TOKEN
 test -r $SPFTRC && . $SPFTRC
-test -n "$TOKEN" || { echo "TOKEN not set! Exiting." >&2; exit 1; }
+test -n "$TOKEN" || { echo "TOKEN not set in $SPFTRC! Exiting." >&2; exit 1; }
 
 idsfile=$(mktemp /tmp/cloudflare-ids-XXXXXX)
 zonefile=$(mktemp /tmp/cloudflare-zone-XXXX)
 
 trap "rm -f $idsfile $zonefile $zonefile-data" EXIT
-a="/$0"; a=${a%/*}; a=${a:-.}; a=${a#/}/; BINDIR=$(cd $a; pwd)
 for cmd in jq grep
 do
   type $cmd >&2 || exit 1
@@ -65,6 +61,9 @@ apicmd() {
 }
 
 dnslinkset() {
+  name=_dnslink.$1
+  content="dnslink=$2"
+
   APIURL="https://api.cloudflare.com/client/v4"
 
   DOMAIN_ID=$(apicmd GET /zones | jq -r '.result | .[] | .name + ":" + .id' \
@@ -72,11 +71,10 @@ dnslinkset() {
     || exit 1
   DOMAIN_ID=$(echo $DOMAIN_ID | cut -d: -f2)
 
-  apicmd GET "/zones/$DOMAIN_ID/dns_records?type=TXT" \
+  apicmd GET "/zones/$DOMAIN_ID/dns_records?type=TXT&name=$name&per_page=100" \
     | jq -r '.result | .[] | .name + ":" + .id' > $idsfile
 
-  name=_dnslink.$1
-  content=dnslink=$2
+  grep $name $idsfile || exit 1
   id_to_change=$(grep "^$name" $idsfile | cut -d: -f2)
 
   echo -n "Changing $name with id $id_to_change... "
@@ -90,9 +88,10 @@ EOF
     && echo OK || { echo error; return 1; }
 }
 
-OLDREF=$(dnslinkget $DNS)
 NEWREF=$(ipfs add -Qr $PUBLICDIR) \
-  && echo "pinned $NEWREF recursively (local)"
+  && echo "pinned $NEWREF recursively (local)" \
+  || exit 1
+OLDREF=$(dnslinkget $DNS)
 test "${OLDREF##*/}" = "$NEWREF" && { echo "No change"; exit 1; }
 
 nodesdo add $NEWREF || exit 1
