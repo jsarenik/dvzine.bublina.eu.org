@@ -1,4 +1,4 @@
 #!/bin/sh
 
 #./genmin.sh
-rsync -av --delete . hd:web/dvzine/
+rsync -av --delete public hd:web/dvzine/

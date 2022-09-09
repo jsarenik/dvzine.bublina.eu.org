@@ -1,6 +1,6 @@
 #!/bin/sh
 
-find . -name '*.html' \
+find public -name '*.html' \
   | while read i
 do
   sed -i \
